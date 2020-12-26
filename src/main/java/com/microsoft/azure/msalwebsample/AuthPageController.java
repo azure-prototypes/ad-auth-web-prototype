@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.microsoft.aad.msal4j.*;
 import com.nimbusds.jwt.JWTParser;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -29,20 +31,24 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AuthPageController {
 
-    @Autowired
-    AuthHelper authHelper;
+    private static final Logger LOG = LoggerFactory.getLogger(AuthPageController.class);
+
+    private final AuthHelper authHelper;
+
+    public AuthPageController(AuthHelper authHelper) {
+        this.authHelper = authHelper;
+    }
 
     @RequestMapping("/msal4jsample")
     public String homepage(){
         return "index";
     }
 
-    @RequestMapping("/msal4jsample/secure/aad")
+    @RequestMapping("/mywebapp/secure/aad")
     public ModelAndView securePage(HttpServletRequest httpRequest) throws ParseException {
+        LOG.info("Request send to secured page");
         ModelAndView mav = new ModelAndView("auth_page");
-
         setAccountInfo(mav, httpRequest);
-
         return mav;
     }
 

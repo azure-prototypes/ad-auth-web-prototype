@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.microsoft.aad.msal4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,10 +26,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthFilter implements Filter {
 
-    private List<String> excludedUrls = Arrays.asList("/", "/msal4jsample/");
+    private static final Logger LOG = LoggerFactory.getLogger(AuthFilter.class);
 
-    @Autowired
-    AuthHelper authHelper;
+    private final List<String> excludedUrls = Arrays.asList("/", "/msal4jsample/", "/mywebapp");
+
+    private final AuthHelper authHelper;
+
+    public AuthFilter(AuthHelper authHelper) {
+        this.authHelper = authHelper;
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -41,8 +48,8 @@ public class AuthFilter implements Filter {
                 String path = httpRequest.getServletPath();
                 String queryStr = httpRequest.getQueryString();
                 String fullUrl = currentUri + (queryStr != null ? "?" + queryStr : "");
+                LOG.info("Full URL = [{}]", fullUrl);
 
-                // exclude home page
                 if(excludedUrls.contains(path)){
                     chain.doFilter(request, response);
                     return;
