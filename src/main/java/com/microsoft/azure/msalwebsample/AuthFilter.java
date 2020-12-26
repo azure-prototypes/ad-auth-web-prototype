@@ -56,7 +56,7 @@ public class AuthFilter implements Filter {
                 }
 
                 if(containsAuthenticationCode(httpRequest)){
-                    // response should have authentication code, which will be used to acquire access token
+                    LOG.info("Request contains authentication token...");
                     authHelper.processAuthenticationCodeRedirect(httpRequest, currentUri, fullUrl);
 
                     chain.doFilter(request, response);

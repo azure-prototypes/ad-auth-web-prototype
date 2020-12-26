@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.text.ParseException;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -44,7 +45,8 @@ public class AuthPageController {
 
     @RequestMapping(value = {"/mywebapp/secure/aad"})
     public ModelAndView securePage(HttpServletRequest httpRequest) throws ParseException {
-        LOG.info("Request send to secured page");
+        IAuthenticationResult auth = SessionManagementHelper.getAuthSessionObject(httpRequest);
+        LOG.info("Authenticated user = [{}]", auth.account().username());
         ModelAndView mav = new ModelAndView("auth_page");
         setAccountInfo(mav, httpRequest);
         return mav;
