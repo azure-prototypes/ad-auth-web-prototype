@@ -6,13 +6,10 @@ package com.microsoft.azure.msalwebsample;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-/**
- * Object containing configuration data for the application. Spring will automatically wire the
- * values by grabbing them from application.properties file
- */
+
 @Component
 @ConfigurationProperties("aad")
-class BasicConfiguration {
+public class BasicConfiguration {
 
     private String clientId;
     private String authority;

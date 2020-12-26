@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-package com.microsoft.azure.msalwebsample;
+package com.microsoft.azure.msalwebsample.helper;
 
 import java.util.Date;
 
@@ -14,11 +14,11 @@ class StateData {
         this.expirationDate = expirationDate;
     }
 
-    String getNonce() {
+    public String getNonce() {
         return nonce;
     }
 
-    Date getExpirationDate() {
+    public Date getExpirationDate() {
         return expirationDate;
     }
 }

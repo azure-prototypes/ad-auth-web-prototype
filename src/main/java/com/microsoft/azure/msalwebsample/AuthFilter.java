@@ -5,6 +5,8 @@ package com.microsoft.azure.msalwebsample;
 
 import com.microsoft.aad.msal4j.IAuthenticationResult;
 import com.microsoft.aad.msal4j.MsalException;
+import com.microsoft.azure.msalwebsample.helper.AuthHelper;
+import com.microsoft.azure.msalwebsample.helper.SessionManagementHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -63,7 +65,7 @@ public class AuthFilter implements Filter {
 
                 // check if user has a AuthData in the session
                 if (!isAuthenticated(httpRequest)) {
-                        // not authenticated, redirecting to login.microsoft.com so user can authenticate
+                        LOG.info("Request is not authenticated, redirecting to Microsoft AAD to sign in");
                         authHelper.sendAuthRedirect(
                                 httpRequest,
                                 httpResponse,

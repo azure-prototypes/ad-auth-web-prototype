@@ -5,9 +5,9 @@ package com.microsoft.azure.msalwebsample.api;
 
 import com.microsoft.aad.msal4j.IAuthenticationResult;
 import com.microsoft.aad.msal4j.MsalInteractionRequiredException;
-import com.microsoft.azure.msalwebsample.AuthHelper;
-import com.microsoft.azure.msalwebsample.HttpClientHelper;
-import com.microsoft.azure.msalwebsample.SessionManagementHelper;
+import com.microsoft.azure.msalwebsample.helper.AuthHelper;
+import com.microsoft.azure.msalwebsample.helper.HttpClientHelper;
+import com.microsoft.azure.msalwebsample.helper.SessionManagementHelper;
 import com.nimbusds.jwt.JWTParser;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -37,12 +37,12 @@ public class AuthPageController {
         this.authHelper = authHelper;
     }
 
-    @RequestMapping(value = {"/msal4jsample", "/mywebapp"})
+    @RequestMapping(value = {"/mywebapp"})
     public String homepage(){
         return "index";
     }
 
-    @RequestMapping(value = {"/mywebapp/secure/aad", "/msal4jsample/secure/add"})
+    @RequestMapping(value = {"/mywebapp/secure/aad"})
     public ModelAndView securePage(HttpServletRequest httpRequest) throws ParseException {
         LOG.info("Request send to secured page");
         ModelAndView mav = new ModelAndView("auth_page");
