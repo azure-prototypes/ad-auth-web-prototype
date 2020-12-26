@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-package com.microsoft.azure.msalwebsample;
+package com.microsoft.azure.msalwebsample.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +11,6 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Endpoint where errors will be redirected
- */
 @Controller
 public class ErrorHandlerController implements ErrorController {
 

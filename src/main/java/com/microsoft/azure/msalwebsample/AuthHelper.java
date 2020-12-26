@@ -35,14 +35,11 @@ import org.springframework.stereotype.Component;
 
 import static com.microsoft.azure.msalwebsample.SessionManagementHelper.FAILED_TO_VALIDATE_MESSAGE;
 
-/**
- * Helpers for acquiring authorization codes and tokens from AAD
- */
 @Component
-class AuthHelper {
+public class AuthHelper {
 
-    static final String PRINCIPAL_SESSION_NAME = "principal";
-    static final String TOKEN_CACHE_SESSION_ATTRIBUTE = "token_cache";
+    public static final String PRINCIPAL_SESSION_NAME = "principal";
+    public static final String TOKEN_CACHE_SESSION_ATTRIBUTE = "token_cache";
 
     private String clientId;
     private String clientSecret;
@@ -51,8 +48,11 @@ class AuthHelper {
     private String redirectUriGraph;
     private String msGraphEndpointHost;
 
-    @Autowired
-    BasicConfiguration configuration;
+    private final BasicConfiguration configuration;
+
+    public AuthHelper(BasicConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
     @PostConstruct
     public void init() {
@@ -64,7 +64,7 @@ class AuthHelper {
         msGraphEndpointHost = configuration.getMsGraphEndpointHost();
     }
 
-    void processAuthenticationCodeRedirect(HttpServletRequest httpRequest, String currentUri, String fullUrl)
+    public void processAuthenticationCodeRedirect(HttpServletRequest httpRequest, String currentUri, String fullUrl)
             throws Throwable {
 
         Map<String, List<String>> params = new HashMap<>();
@@ -97,7 +97,7 @@ class AuthHelper {
         }
     }
 
-    IAuthenticationResult getAuthResultBySilentFlow(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    public IAuthenticationResult getAuthResultBySilentFlow(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Throwable {
 
         IAuthenticationResult result =  SessionManagementHelper.getAuthSessionObject(httpRequest);
@@ -139,7 +139,7 @@ class AuthHelper {
         }
     }
 
-    void sendAuthRedirect(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String scope, String redirectURL)
+    public void sendAuthRedirect(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String scope, String redirectURL)
             throws IOException {
 
         // state parameter to validate response from Authorization server and nonce parameter to validate idToken
@@ -153,7 +153,7 @@ class AuthHelper {
         httpResponse.sendRedirect(authorizationCodeUrl);
     }
 
-    String getAuthorizationCodeUrl(String claims, String scope, String registeredRedirectURL, String state, String nonce) {
+    public String getAuthorizationCodeUrl(String claims, String scope, String registeredRedirectURL, String state, String nonce) {
 
         String updatedScopes = scope == null ? "" : scope;
 
@@ -215,15 +215,15 @@ class AuthHelper {
         return authResponse instanceof AuthenticationSuccessResponse;
     }
 
-    String getRedirectUriSignIn() {
+    public String getRedirectUriSignIn() {
         return redirectUriSignIn;
     }
 
-    String getRedirectUriGraph() {
+    public String getRedirectUriGraph() {
         return redirectUriGraph;
     }
 
-    String getMsGraphEndpointHost(){
+    public String getMsGraphEndpointHost(){
         return msGraphEndpointHost;
     }
 }

@@ -11,12 +11,12 @@ import java.net.HttpURLConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-class HttpClientHelper {
+public class HttpClientHelper {
 
     private HttpClientHelper() {
     }
 
-    static String getResponseStringFromConn(HttpURLConnection conn) throws IOException {
+    public static String getResponseStringFromConn(HttpURLConnection conn) throws IOException {
 
         BufferedReader reader;
         if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -33,7 +33,7 @@ class HttpClientHelper {
         return stringBuilder.toString();
     }
 
-    static JSONObject processResponse(int responseCode, String response) throws JSONException {
+    public static JSONObject processResponse(int responseCode, String response) throws JSONException {
 
         JSONObject responseJson = new JSONObject();
         responseJson.put("responseCode", responseCode);

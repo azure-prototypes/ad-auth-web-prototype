@@ -1,8 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-package com.microsoft.azure.msalwebsample;
+package com.microsoft.azure.msalwebsample.api;
 
+import com.microsoft.aad.msal4j.IAuthenticationResult;
+import com.microsoft.aad.msal4j.MsalInteractionRequiredException;
+import com.microsoft.azure.msalwebsample.AuthHelper;
+import com.microsoft.azure.msalwebsample.HttpClientHelper;
+import com.microsoft.azure.msalwebsample.SessionManagementHelper;
+import com.nimbusds.jwt.JWTParser;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -11,23 +26,6 @@ import java.text.ParseException;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.microsoft.aad.msal4j.*;
-import com.nimbusds.jwt.JWTParser;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-/**
- * Controller exposing application endpoints
- */
 @Controller
 public class AuthPageController {
 
@@ -39,12 +37,12 @@ public class AuthPageController {
         this.authHelper = authHelper;
     }
 
-    @RequestMapping("/msal4jsample")
+    @RequestMapping(value = {"/msal4jsample", "/mywebapp"})
     public String homepage(){
         return "index";
     }
 
-    @RequestMapping("/mywebapp/secure/aad")
+    @RequestMapping(value = {"/mywebapp/secure/aad", "/msal4jsample/secure/add"})
     public ModelAndView securePage(HttpServletRequest httpRequest) throws ParseException {
         LOG.info("Request send to secured page");
         ModelAndView mav = new ModelAndView("auth_page");
@@ -52,9 +50,10 @@ public class AuthPageController {
         return mav;
     }
 
-    @RequestMapping("/msal4jsample/sign_out")
+    @RequestMapping(value ={"/msal4jsample/sign_out", "/mywebapp/sign_out"})
     public void signOut(HttpServletRequest httpRequest, HttpServletResponse response) throws IOException {
 
+        LOG.info("Sign out hit");
         httpRequest.getSession().invalidate();
 
         String endSessionEndpoint = "https://login.microsoftonline.com/common/oauth2/v2.0/logout";
