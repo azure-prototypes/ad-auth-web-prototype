@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("aad")
-public class BasicConfiguration {
+public class AadConfiguration {
 
     private String clientId;
     private String authority;

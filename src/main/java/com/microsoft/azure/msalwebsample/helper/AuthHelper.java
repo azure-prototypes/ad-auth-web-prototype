@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.microsoft.aad.msal4j.*;
-import com.microsoft.azure.msalwebsample.BasicConfiguration;
+import com.microsoft.azure.msalwebsample.AadConfiguration;
 import com.nimbusds.jwt.JWTParser;
 import com.nimbusds.oauth2.sdk.AuthorizationCode;
 import com.nimbusds.openid.connect.sdk.AuthenticationErrorResponse;
@@ -46,9 +46,9 @@ public class AuthHelper {
     private String redirectUriGraph;
     private String msGraphEndpointHost;
 
-    private final BasicConfiguration configuration;
+    private final AadConfiguration configuration;
 
-    public AuthHelper(BasicConfiguration configuration) {
+    public AuthHelper(AadConfiguration configuration) {
         this.configuration = configuration;
     }
 
